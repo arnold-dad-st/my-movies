@@ -1,53 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Header } from "./components/header/header";
-import { omdbApi } from "./api/movie.api";
 import "bootstrap/dist/css/bootstrap.css";
+import { SearchMovies } from "./pages/search-movies/search-movies";
+import { Movies } from "./pages/movies/movies";
+
+const tab = {
+  search: "search",
+  movies: "movies",
+};
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("Home");
-  const [data, setData] = useState([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await omdbApi.fetchMoviesBySearch(searchQuery || "");
-
-      if (response.success) {
-        setData(response.data.Search || []);
-      }
-    };
-
-    fetchData();
-  }, [searchQuery]);
+  const [activeTab, setActiveTab] = useState(tab.search);
 
   return (
     <div>
       <Header searchQuery={searchQuery} onSearch={setSearchQuery} />
-      <main className="container mt-4">
-        <table className="table table-striped mt-3 table-hover">
-          <thead className="thead-dark">
-            <tr>
-              <th>Poster</th>
-              <th>Title</th>
-              <th>Year</th>
-              <th>Type</th>
-              <th className="text-md-end">IMDB ID</th>
-            </tr>
-          </thead>
-          <tbody>
-            {data.map((movie) => (
-              <tr key={movie.imdbID}>
-                <td>
-                  <img width="50" src={movie.Poster} alt={movie.Title} />
-                </td>
-                <td>{movie.Title}</td>
-                <td>{movie.Year}</td>
-                <td>{movie.Type}</td>
-                <td className="text-md-end">{movie.imdbID}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </main>
+      <ul className="nav nav-tabs">
+        <li className="nav-item">
+          <button
+            onClick={() => setActiveTab(tab.search)}
+            className="nav-link active"
+          >
+            Search Movies
+          </button>
+        </li>
+        <li className="nav-item">
+          <button onClick={() => setActiveTab(tab.movies)} className="nav-link">
+            My Movie List
+          </button>
+        </li>
+      </ul>
+
+      {activeTab === tab.search ? (
+        <SearchMovies searchQuery={searchQuery} />
+      ) : (
+        <Movies />
+      )}
+
+      <main className="container mt-4"></main>
     </div>
   );
 }
