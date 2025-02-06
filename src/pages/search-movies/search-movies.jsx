@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Table } from "../../components/table/table";
 import { Modal } from "../../components/modal/modal";
 import { omdbApi } from "../../api/movie.api";
 import { MovieDetails } from "./movie-details/movie-details";
+import { APP_TITLE } from "../../utils/constant";
+import { getAppTitleByMovie } from "../../utils/helpers";
 
 export const SearchMovies = ({ searchQuery }) => {
   const [data, setData] = useState([]);
   const [open, setModalOpen] = useState(false);
-  const [timeoutId, setTimeoutId] = useState(null);
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [init, setInit] = useState(false);
+  const timeoutIdRef = useRef(null);
 
   const fetchMovies = async () => {
     const response = await omdbApi.fetchMoviesBySearch(searchQuery || "");
@@ -22,8 +24,6 @@ export const SearchMovies = ({ searchQuery }) => {
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
 
-    console.log(window.location.search);
-
     const movieId = urlParams.get("movieId");
     const title = urlParams.get("title");
     const year = urlParams.get("year");
@@ -31,6 +31,7 @@ export const SearchMovies = ({ searchQuery }) => {
     if (movieId && title && year) {
       setModalOpen(true);
       setSelectedMovie({ imdbID: movieId, Title: title, Year: year });
+      document.title = getAppTitleByMovie(title, year);
     }
   }, []);
 
@@ -42,18 +43,20 @@ export const SearchMovies = ({ searchQuery }) => {
   useEffect(() => {
     if (!init) return;
 
-    clearTimeout(timeoutId);
+    clearTimeout(timeoutIdRef.current);
 
     const toId = setTimeout(() => {
       fetchMovies();
     }, 1000);
 
-    setTimeoutId(toId);
+    timeoutIdRef.current = toId;
   }, [searchQuery]);
 
   const handleRowClick = (row) => {
     setModalOpen(true);
     setSelectedMovie(row);
+
+    document.title = getAppTitleByMovie(row.Title, row.Year);
 
     window.history.pushState(
       null,
@@ -65,6 +68,7 @@ export const SearchMovies = ({ searchQuery }) => {
   const handleCloseModal = () => {
     setModalOpen(false);
     window.history.pushState("", "", "/");
+    document.title = APP_TITLE;
   };
 
   return (
@@ -73,7 +77,7 @@ export const SearchMovies = ({ searchQuery }) => {
       <Modal
         open={open}
         onClose={handleCloseModal}
-        title={`${selectedMovie?.Title} (${selectedMovie?.Year})`}
+        title={getAppTitleByMovie(selectedMovie?.Title, selectedMovie?.Year)}
       >
         <MovieDetails id={selectedMovie?.imdbID} />
       </Modal>

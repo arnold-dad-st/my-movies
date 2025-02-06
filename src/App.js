@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { Header } from "./components/header/header";
-import "bootstrap/dist/css/bootstrap.css";
 import { SearchMovies } from "./pages/search-movies/search-movies";
 import { Movies } from "./pages/movies/movies";
+
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 const tab = {
   search: "search",
