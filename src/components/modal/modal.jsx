@@ -1,7 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { useKey } from "../../hooks/use-key";
 
 export function Modal({ open, onClose, children, title }) {
+  useKey("Escape", () => {
+    onClose();
+  });
+
   return (
     <div
       className={`modal fade bd-example-modal-xl show ${open && "show"}`}
