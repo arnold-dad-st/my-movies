@@ -1,7 +1,9 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useContext, useEffect } from "react";
+import { MoviesContext, tab } from "../../contexts/movies-context";
 import "./header.css";
 
-export const Header = ({ onSearch, searchQuery }) => {
+export const Header = () => {
+  const { searchQuery, onSearch, activeTab } = useContext(MoviesContext);
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -14,14 +16,16 @@ export const Header = ({ onSearch, searchQuery }) => {
         <span role="img">🎬</span>
         <h1>My Movies</h1>
       </div>
-      <input
-        ref={inputRef}
-        value={searchQuery}
-        type="text"
-        className="form-control w-25"
-        placeholder="Search..."
-        onChange={(e) => onSearch(e.target.value)}
-      />
+      {activeTab === tab.search && (
+        <input
+          ref={inputRef}
+          value={searchQuery}
+          type="text"
+          className="form-control w-25"
+          placeholder="Search..."
+          onChange={(e) => onSearch(e.target.value)}
+        />
+      )}
     </header>
   );
 };

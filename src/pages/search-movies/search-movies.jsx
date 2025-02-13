@@ -1,8 +1,9 @@
-import React, { useState, useReducer, useEffect, useRef } from "react";
+import React, { useContext, useReducer, useEffect, useRef } from "react";
 import { Table } from "../../components/table/table";
 import { Modal } from "../../components/modal/modal";
 import { omdbApi } from "../../api/movie.api";
 import { MovieDetails } from "./movie-details/movie-details";
+import { MoviesContext } from "../../contexts/movies-context";
 import { APP_TITLE } from "../../utils/constant";
 import { getAppTitleByMovie } from "../../utils/helpers";
 
@@ -29,7 +30,9 @@ const searchMovieReducer = (state, action) => {
   }
 };
 
-export const SearchMovies = ({ searchQuery }) => {
+export const SearchMovies = () => {
+  const { searchQuery } = useContext(MoviesContext);
+
   const [state, dispatch] = useReducer(searchMovieReducer, initialState);
   const timeoutIdRef = useRef(null);
 
