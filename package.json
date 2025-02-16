@@ -2,7 +2,7 @@
   "name": "movie-project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https:/arnold-dad-st.github.io/my-movies",
+  "homepage": "https://arnold-dad-st.github.io/my-movies",
   "dependencies": {
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
