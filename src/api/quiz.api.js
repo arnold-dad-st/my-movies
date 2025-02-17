@@ -8,9 +8,9 @@ class QuizApi {
       const response = await fetch(`${this.baseUrl}/questions`);
       const data = await response.json();
       return {
-        success: data.state === 200,
+        success: response.status === 200,
         data,
-        error: data.state !== 200 ? data.error.message : null,
+        error: response.status !== 200 ? response.error : null,
       };
     } catch (error) {
       return { success: false, data: null, error: error.message };

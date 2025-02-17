@@ -39,7 +39,7 @@ class OMDBApi {
   }
 }
 
-export const omdbApi = new OMDBApi("63300838");
+export const omdbApi = new OMDBApi(process.env.REACT_APP_OMDB_API_KEY);
 
 // Example usage:
 // const omdb = new OMDB('your_api_key_here');
