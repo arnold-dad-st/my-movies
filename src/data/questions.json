@@ -1,0 +1,37 @@
+{
+  "questions": [
+    {
+      "question": "Who directed the 1994 movie 'Pulp Fiction'?",
+      "options": [
+        "Quentin Tarantino",
+        "Steven Spielberg",
+        "Martin Scorsese",
+        "Christopher Nolan"
+      ],
+      "correctOption": 0,
+      "points": 10
+    },
+    {
+      "question": "Which movie features the quote 'I'm gonna make him an offer he can't refuse'?",
+      "options": [
+        "Goodfellas",
+        "The Godfather",
+        "Scarface",
+        "Casino"
+      ],
+      "correctOption": 1,
+      "points": 10
+    },
+    {
+      "question": "What is the highest-grossing movie of all time (as of 2024)?",
+      "options": [
+        "Avengers: Endgame",
+        "Titanic",
+        "Avatar",
+        "The Lion King"
+      ],
+      "correctOption": 2,
+      "points": 10
+    }
+  ]
+}
