@@ -9,25 +9,35 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
 const Tabs = () => {
-  const { setActiveTab } = useContext(MoviesContext);
+  const { setActiveTab, activeTab } = useContext(MoviesContext);
+
+  const getTabClasses = (tab) => {
+    return `nav-link ${activeTab === tab ? "active" : ""}`;
+  };
 
   return (
     <ul className="nav nav-tabs">
-      <li className="nav-item">
+      <li className="nav-item ">
         <button
           onClick={() => setActiveTab(tab.search)}
-          className="nav-link active"
+          className={getTabClasses(tab.search)}
         >
           Search Movies
         </button>
       </li>
       <li className="nav-item">
-        <button onClick={() => setActiveTab(tab.movies)} className="nav-link">
+        <button
+          onClick={() => setActiveTab(tab.movies)}
+          className={getTabClasses(tab.movies)}
+        >
           My Movie List
         </button>
       </li>
       <li className="nav-item">
-        <button onClick={() => setActiveTab(tab.quiz)} className="nav-link">
+        <button
+          onClick={() => setActiveTab(tab.quiz)}
+          className={getTabClasses(tab.quiz)}
+        >
           Quiz
         </button>
       </li>

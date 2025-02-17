@@ -2,6 +2,7 @@
   "name": "movie-project",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://arnold-dad-st.github.io/my-movies",
   "dependencies": {
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
@@ -15,7 +16,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "json-server --watch src/data/questions.json --port 5001"
+    "server": "json-server --watch src/data/questions.json --port 5001",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [
@@ -36,6 +39,7 @@
     ]
   },
   "devDependencies": {
-    "json-server": "^1.0.0-beta.3"
+    "json-server": "^1.0.0-beta.3",
+    "gh-pages": "^6.3.0"
   }
 }
