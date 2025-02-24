@@ -1,11 +1,13 @@
 import { useContext, useEffect } from "react";
-import { QuizProvider, QuizContext } from "./context/quiz-context";
+import { DATA_RECEIVED_ACTION } from "./context/actions";
+import { QuizProvider, QuizContext, STATUES } from "./context/quiz-context";
 import { quizApi } from "../../api/quiz.api";
 import { Loading } from "./components/loading/loading";
 import { Error } from "./components/error/error";
 import { StartScreen } from "./components/start-screen/start-screen";
 import { Questions } from "./components/questions/questions";
 import { Progress } from "./components/progress/progress";
+import { FinishScreen } from "./components/finish-screen/finish-screen";
 import { Footer } from "./components/footer/footer";
 import "./quiz.css";
 
@@ -15,12 +17,12 @@ const QuizApp = () => {
   useEffect(() => {
     quizApi.getQuestions().then((response) => {
       if (response.success) {
-        dispatch({ type: "DATA_RECEIVED", payload: response.data });
+        dispatch({ type: DATA_RECEIVED_ACTION, payload: response.data });
       } else {
         dispatch({ type: "DATA_FAILED" });
       }
     });
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="quiz-game mt-4">
@@ -35,6 +37,7 @@ const QuizApp = () => {
             <Footer />
           </>
         )}
+        {status === STATUES.finished && <FinishScreen />}
       </main>
     </div>
   );
